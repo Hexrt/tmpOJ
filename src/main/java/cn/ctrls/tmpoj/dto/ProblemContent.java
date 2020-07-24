@@ -16,7 +16,16 @@ public class ProblemContent {
     private ArrayList<TestCase> sampleTests;
     private String url;
     private String sourceFrom;
+    private String remoteId;
 
+
+    public String getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(String remoteId) {
+        this.remoteId = remoteId;
+    }
     public ProblemContent(String problemId, String title, String url, String sourceFrom) {
         this.problemId = problemId;
         this.title = title;

@@ -5,6 +5,7 @@ import cn.ctrls.tmpoj.Spider.Inter.ProblemAnalyzer;
 import cn.ctrls.tmpoj.dto.ContestInfo;
 import cn.ctrls.tmpoj.dto.ProblemContent;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,14 +15,14 @@ import java.util.regex.Pattern;
 
 @Component(value = "cfAnalyzer")
 public class CodeForcesAnalyzer implements ContestAnalyzer , ProblemAnalyzer {
+    private static final String PROBLEM_ID_REGEX = "([1-9]+)(.*?)";
     @Value("${CodeForces.contestUrl}")
     private String CONTEST_URL;
     //如果发现题目的Url错误了，请往下找problems在add的代码块修改
     @Value("${CodeForces.problemUrl}")
     private String PROBLEM_URL;
-    private static final String PROBLEM_ID_REGEX = "([1-9]+)(.*?)";
     @Resource(name = "requester")
-    private Requester requester = new Requester();
+    private Requester requester;
 
     @Override
     public ContestInfo getContestInfo(String id) {
@@ -36,10 +37,11 @@ public class CodeForcesAnalyzer implements ContestAnalyzer , ProblemAnalyzer {
             if (mat.group(0).isEmpty())continue;
             problems.add(new ProblemContent(id+mat.group(1),mat.group(2),contestUrl+"/problem/"+mat.group(1),"CodeForces"));
         }
+        contestInfo.setContent(rawString);
         contestInfo.setProblems(problems);
         contestInfo.setUrl(contestUrl);
         contestInfo.setProblemCounts(problems.size());
-        contestInfo.setName("CYQ-CF");
+        contestInfo.setTitle("CYQ-CF");
         contestInfo.setWriter("CYQ");
         return contestInfo;
     }
@@ -51,6 +53,8 @@ public class CodeForcesAnalyzer implements ContestAnalyzer , ProblemAnalyzer {
         if (!mat.matches())return null;
         String url = PROBLEM_URL+mat.group(1)+"/"+mat.group(2);
         String data = requester.get(url);
-        return null;
+        ProblemContent problemContent = new ProblemContent(mat.group(1)+mat.group(2), "test", url,"CodeForces");
+        problemContent.setContent(data);
+        return problemContent;
     }
 }

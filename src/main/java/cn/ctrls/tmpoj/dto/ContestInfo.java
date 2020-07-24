@@ -3,20 +3,21 @@ package cn.ctrls.tmpoj.dto;
 import java.util.ArrayList;
 
 public class ContestInfo {
-    private String name;
+    private String title;
     private String url;
+    private String remoteId;
     private Integer problemCounts;
     private String writer;
+    private String content;
     private ArrayList<ProblemContent> problems;
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getTitle() {
+        return title;
     }
-
+    public void setTitle(String title) {
+        this.title = title;
+    }
     public String getUrl() {
         return url;
     }
@@ -49,4 +50,19 @@ public class ContestInfo {
         this.problems = problems;
     }
 
+    public String getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(String remoteId) {
+        this.remoteId = remoteId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }
