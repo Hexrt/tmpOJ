@@ -1,11 +1,13 @@
 package cn.ctrls.tmpoj.controller;
 
 import cn.ctrls.tmpoj.Spider.CodeForcesSpider;
+import cn.ctrls.tmpoj.controller.utils.SpiderWithDatabase;
 import cn.ctrls.tmpoj.dto.ContestInfo;
 import cn.ctrls.tmpoj.dto.ProblemContent;
 import cn.ctrls.tmpoj.mapper.CodeForcesMapper;
 import cn.ctrls.tmpoj.model.CodeForcesContest;
 import cn.ctrls.tmpoj.model.CodeForcesProblem;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +27,11 @@ public class CodeForcesController {
     private CodeForcesSpider cfSpider;
     @Value("${CodeForces.remoteSite}")
     private String remoteSite;
+    @Resource(name = "spiderWithDatabase")
+    private SpiderWithDatabase spiderContestAndInsert;
 
     @GetMapping("/CodeForces/contest/{Id}")
-    public String ContestPage(HttpServletRequest request,
+    public String contestPage(HttpServletRequest request,
                               HttpServletResponse response,
                               @PathVariable(name = "Id",required = false) String Id){
         if (Id==null||!Id.matches("[0-9]*?"))
@@ -36,13 +40,13 @@ public class CodeForcesController {
         if (remoteId!=null){
             return "redirect:"+remoteSite+remoteId;
         }
-        CodeForcesContest contest = SpiderContestAndInsert(Id);
+        CodeForcesContest contest = (CodeForcesContest) spiderContestAndInsert.spiderContestAndInsert(Id, cfSpider, cfMapper);
         if (contest == null)return "error";
         return "redirect:"+remoteSite+contest.getRemoteId();
     }
 
     @GetMapping("/CodeForces/problem/{Id}")
-    public String ProblemPage(@PathVariable(name = "Id", required = false) String Id){
+    public String problemPage(@PathVariable(name = "Id", required = false) String Id){
         Id = Id.toUpperCase();
         if (Id==null||!Id.matches("[0-9]+[A-Z][0-9]?")){
             return "error";
@@ -56,16 +60,16 @@ public class CodeForcesController {
         //从库存中查找
         String url = cfMapper.getProblemRemoteId(Id);
         //存在库存就直接重定向为url
-        if (url!=null)return "redirect:"+url;
+        if (url!=null)return "redirect:"+remoteSite+url;
         //否则从测试页面中开始缓存题目
         CodeForcesContest contest = cfMapper.getContest(contestId);
 
         //如果库存中也没有这个测试，就临时爬取，并且入库
         if (contest==null){
-            contest = SpiderContestAndInsert(contestId);
+            contest = (CodeForcesContest) spiderContestAndInsert.spiderContestAndInsert(Id, cfSpider, cfMapper);
             if (contest==null)return"error";
         }
-        String problems[] = contest.getProblems().split("|");
+        String[] problems = contest.getProblems().split("|");
         //题目出现了未知的问题
         if (problems==null||problems.length==0){
             return "error";
@@ -92,26 +96,4 @@ public class CodeForcesController {
         return "redirect:"+remoteSite+problemContent.getRemoteId();
     }
 
-    //爬取并且插入库存中
-    private CodeForcesContest SpiderContestAndInsert(String contestId){
-        ContestInfo contestInfo = cfSpider.getContestInfoById(contestId);
-        //没有这个测试，错误！
-        if (contestInfo==null||contestInfo.getProblemCounts()==0){
-            return null;
-        }
-        CodeForcesContest contest = new CodeForcesContest();
-        contest.setId(contestId);
-        contest.setRemoteId(contestInfo.getRemoteId());
-        contest.setContestTitle(contestInfo.getTitle());
-        contest.setProblemsCount(contestInfo.getProblemCounts());
-        ArrayList<ProblemContent> problems = contestInfo.getProblems();
-        StringBuilder sbd = new StringBuilder();
-        for (ProblemContent prob:problems){
-            sbd.append(prob.getProblemId());
-            sbd.append("|");
-        }
-        contest.setProblems(sbd.toString());
-        cfMapper.insertContest(contest);
-        return contest;
-    }
 }

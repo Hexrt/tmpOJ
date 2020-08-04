@@ -1,5 +1,6 @@
 package cn.ctrls.tmpoj.mapper;
 
+import cn.ctrls.tmpoj.mapper.inter.OJMapper;
 import cn.ctrls.tmpoj.model.CodeForcesContest;
 import cn.ctrls.tmpoj.model.CodeForcesProblem;
 import org.apache.ibatis.annotations.Insert;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository(value = "cfMapper")
-public interface CodeForcesMapper {
+public interface CodeForcesMapper extends OJMapper {
     @Insert({"INSERT INTO cf_contest (id,contest_title,problems_count,remote_id,problems) VALUES (#{id},#{contestTitle},#{problemsCount},#{remoteId},#{problems})"})
     public void insertContest(CodeForcesContest codeForcesContest);
     @Insert({"INSERT INTO cf_problems (id, title, remote_id) VALUES (#{id},#{title},#{remoteId})"})

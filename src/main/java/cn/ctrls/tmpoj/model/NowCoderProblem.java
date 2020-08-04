@@ -1,9 +1,8 @@
 package cn.ctrls.tmpoj.model;
 
-
 import cn.ctrls.tmpoj.model.inter.Problem;
 
-public class CodeForcesProblem implements Problem {
+public class NowCoderProblem  implements Problem {
     private String id;
     private String title;
     private String remoteId;
@@ -32,5 +31,4 @@ public class CodeForcesProblem implements Problem {
     public void setRemoteId(String remoteId) {
         this.remoteId = remoteId;
     }
-
 }

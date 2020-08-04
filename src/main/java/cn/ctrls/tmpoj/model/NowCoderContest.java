@@ -2,7 +2,7 @@ package cn.ctrls.tmpoj.model;
 
 import cn.ctrls.tmpoj.model.inter.Contest;
 
-public class CodeForcesContest implements Contest {
+public class NowCoderContest  implements Contest {
     private String contestTitle;
     //测试ID仅仅保留该ID
     //如1234

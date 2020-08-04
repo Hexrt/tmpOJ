@@ -1,5 +1,6 @@
 package cn.ctrls.tmpoj.Spider;
 
+import cn.ctrls.tmpoj.Spider.Inter.Spider;
 import cn.ctrls.tmpoj.dto.ContestInfo;
 import cn.ctrls.tmpoj.dto.ProblemContent;
 import cn.ctrls.tmpoj.utils.fileUtils.UploadFile;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 @Component(value = "cfSpider")
-public class CodeForcesSpider {
+public class CodeForcesSpider implements Spider {
     @Value("${CodeForces.remotePath}")
     private String remotePath;
 
@@ -43,6 +44,5 @@ public class CodeForcesSpider {
     public ArrayList<ProblemContent> getProblemsByContestId(String id){
         return getContestInfoById(id).getProblems();
     }
-
 
 }
