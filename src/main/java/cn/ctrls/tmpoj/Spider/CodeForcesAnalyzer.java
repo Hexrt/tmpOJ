@@ -1,15 +1,11 @@
 package cn.ctrls.tmpoj.Spider;
 
 import cn.ctrls.tmpoj.Spider.Inter.Analyzer;
-import cn.ctrls.tmpoj.Spider.Inter.ContestAnalyzer;
-import cn.ctrls.tmpoj.Spider.Inter.ProblemAnalyzer;
 import cn.ctrls.tmpoj.config.CookieConfig;
 import cn.ctrls.tmpoj.dto.ContestInfo;
 import cn.ctrls.tmpoj.dto.ProblemContent;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.regex.Matcher;

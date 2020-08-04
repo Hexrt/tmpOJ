@@ -1,17 +1,13 @@
 package cn.ctrls.tmpoj.Spider;
 
 import cn.ctrls.tmpoj.Spider.Inter.Analyzer;
-import cn.ctrls.tmpoj.Spider.Inter.ContestAnalyzer;
-import cn.ctrls.tmpoj.Spider.Inter.ProblemAnalyzer;
 import cn.ctrls.tmpoj.config.CookieConfig;
 import cn.ctrls.tmpoj.dto.ContestInfo;
 import cn.ctrls.tmpoj.dto.ProblemContent;
-import okhttp3.Cookie;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import javax.lang.model.type.ArrayType;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,7 +44,7 @@ public class NowCoderAnalyzer implements Analyzer {
         contestInfo.setProblems(problems);
         contestInfo.setUrl(contestUrl);
         contestInfo.setProblemCounts(problems.size());
-        contestInfo.setTitle("CYQ-CF");
+        contestInfo.setTitle("CYQ-NK");
         contestInfo.setWriter("CYQ");
         return contestInfo;
     }

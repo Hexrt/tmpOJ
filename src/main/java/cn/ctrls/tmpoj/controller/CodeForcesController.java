@@ -2,21 +2,17 @@ package cn.ctrls.tmpoj.controller;
 
 import cn.ctrls.tmpoj.Spider.CodeForcesSpider;
 import cn.ctrls.tmpoj.controller.utils.SpiderWithDatabase;
-import cn.ctrls.tmpoj.dto.ContestInfo;
 import cn.ctrls.tmpoj.dto.ProblemContent;
 import cn.ctrls.tmpoj.mapper.CodeForcesMapper;
 import cn.ctrls.tmpoj.model.CodeForcesContest;
 import cn.ctrls.tmpoj.model.CodeForcesProblem;
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 
 
 @Controller
