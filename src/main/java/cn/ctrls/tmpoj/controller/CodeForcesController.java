@@ -62,7 +62,8 @@ public class CodeForcesController {
 
         //如果库存中也没有这个测试，就临时爬取，并且入库
         if (contest==null){
-            contest = (CodeForcesContest) spiderContestAndInsert.spiderContestAndInsert(Id, cfSpider, cfMapper);
+            //紧急修复问题，由于传入的参数错误，导致测试页面爬取失败，数据库没有存入，但是云存储却成功写入（Id->contestId）
+            contest = (CodeForcesContest) spiderContestAndInsert.spiderContestAndInsert(contestId, cfSpider, cfMapper);
             if (contest==null)return"error";
         }
         String[] problems = contest.getProblems().split("|");

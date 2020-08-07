@@ -34,8 +34,8 @@ public class CodeForcesSpider implements Spider {
 
     public ContestInfo getContestInfoById(String id){
         ContestInfo contestInfo = cfAnalyzer.getContestInfo(id);
-        //如果出错了的话（测试不存在或者网络问题）
-        if (contestInfo==null) return null;
+        //如果出错了的话（测试不存在或者网络问题）或者完全没有题目了
+        if (contestInfo==null||contestInfo.getProblemCounts()==0) return null;
         //加入到库存中
         contestInfo.setRemoteId(upload.uploadString(contestInfo.getContent(),remotePath + UUID.randomUUID() + ".html"));
         return contestInfo;

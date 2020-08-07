@@ -81,7 +81,7 @@
 
     </dependencies>
     <!--设置打包方式-->
-    <packaging>war</packaging>
+    <!--packaging>war</packaging-->
     <build>
         <!--设置文件名-->
         <finalName>TmpOJ</finalName>

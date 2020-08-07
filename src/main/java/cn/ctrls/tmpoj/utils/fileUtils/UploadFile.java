@@ -12,13 +12,13 @@ import java.io.File;
 @Repository(value = "uploadUtil")
 public class UploadFile {
     @Value("${AliOSS.endpoint}")
-    private String endpoint = "oss-cn-beijing.aliyuncs.com";
+    private String endpoint;
     @Value("${AliOSS.accessKeyId}")
-    private String accessKeyId = "LTAI4G1Vi525RDgQRe7XUANw";
+    private String accessKeyId;
     @Value("${AliOSS.accessKeySecret}")
-    private String accessKeySecret = "jclzWwUrIJPRRDuJjsPTJrqB3PiMAK";
+    private String accessKeySecret;
     @Value("${AliOSS.bucketName}")
-    private String bucketName = "ctrl-s";
+    private String bucketName;
 
     public String uploadString(String value, String path){
         // Endpoint以杭州为例，其它Region请按实际情况填写。

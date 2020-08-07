@@ -28,6 +28,7 @@ public class CodeForcesAnalyzer implements Analyzer {
     public ContestInfo getContestInfo(String id) {
         String contestUrl = CONTEST_URL+id;
         String rawString = requester.get(contestUrl);
+        //返回的页面是空的，或者没有
         if (rawString==null)return null;
         ContestInfo contestInfo = new ContestInfo();
         Pattern pat = Pattern.compile("(?:<option value=\"([A-Z]*?[1-9]*?)\" >(.*?)</option>)*");
